@@ -15,6 +15,8 @@ import os
 from datetime import timedelta
 import dj_database_url
 from dotenv import load_dotenv
+import django_heroku
+
 import requests 
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -191,6 +193,10 @@ STATICFILES_DIRS = [
 ]
 MEDIA_ROOT = BASE_DIR / 'static/images'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

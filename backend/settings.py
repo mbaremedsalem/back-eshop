@@ -207,11 +207,11 @@ django_heroku.settings(locals())
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 JAZZMIN_SETTINGS = {
-    # "site_title": "MovieX",
+
     "site_header": "ShopPro",
     "site_title":"ShopPro",
     "site_brand": "Payment Made Easy...",
-    "site_logo": "assets/images/logo.png",
+    "site_logo": "images/logo.png",
     "copyright": "ShopPro - All RIght Reserverd © Copyright 2024",
     # "order_with_respect_to": ["core", 'userauths', "transactions" , 'addon', 'blog']
 

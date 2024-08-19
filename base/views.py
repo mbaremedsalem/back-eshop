@@ -12,8 +12,8 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
-from rest_framework import status
 from datetime import datetime
+
 
 
 @api_view(['GET'])
@@ -163,15 +163,34 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
 
+        # Add custom user data to the response
         serializer = UserSerializerWithToken(self.user).data
         for k, v in serializer.items():
             data[k] = v
 
         return data
 
-
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        try:
+            serializer.is_valid(raise_exception=True)
+            response_data = serializer.validated_data
+            
+            # Add the status code to the response data
+            response_data['status'] = status.HTTP_200_OK
+            
+            return Response(response_data, status=status.HTTP_200_OK)
+        except Exception as e:
+            # Customize error response with status code 400
+            error_response = {
+                "detail": str(e),
+                "status": status.HTTP_400_BAD_REQUEST
+            }
+            return Response(error_response, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 @api_view(['POST'])
